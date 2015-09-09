@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>New User</title>
+  </head>
+  <body>
+    <form class="" action="<%= users_url %>" method="post">
+      <%= auth_token_input %>
+      <h1>New User Sign Up</h1>
+      <p class="errors"><%= flash[:errors].join("<br>").html_safe if flash[:errors] %></p>
+      <input type="email" name="user[email]" placeholder="Your email" onfocus="this.placeholder = ''" value="<%= @user.email%>">
+      <br>
+      <input type="password" name="user[password]" placeholder="Pick a password" onfocus="this.placeholder = ''">
+      <br>
+      <input type="password" name="user[password_confirmation]" placeholder="Re-type password" onfocus="this.placeholder = ''">
+      <br>
+      <input type="tel" name="user[phone]" placeholder="Optional phone number" onfocus="this.placeholder = ''">
+      <br>
+      <input type="submit" class="button" id="submit" value="Submit">
+      <br>
+      <br>
+      <a href=" <%= new_session_url %> ">Already registered? Sign in here!</a>
+    </form>
+  </body>
+</html>

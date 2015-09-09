@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Letsball</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+  <% api_key = ENV['google_maps_api'] %>
+  <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?<%= api_key %>&libraries=places">
+  </script>
+
+</head>
+<body>
+  <% if signed_in? %>
+    <h1><%= "Hi there, #{current_user.email}" %></h1>
+    <%= button_to "Log Out", session_url, method: :delete %>
+  <% end %>
+
+<%= yield %>
+
+</body>
+</html>
