@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Game.create!(
+#   latitude: 37.869283,
+#   longitude: -122.270066,
+#
+#   )
