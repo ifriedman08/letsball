@@ -28,7 +28,12 @@ LetsBall.Views.NewGame = Backbone.View.extend({
   saveGame: function (event) {
     event.preventDefault();
     var newGame = this.setupGame();
-    debugger;
+    newGame.save({},{
+      success: function () {
+        var id = newGame.get('id');
+        Backbone.history.navigate('games/'+id, {trigger: true});
+      }
+    });
   },
 
   render: function () {

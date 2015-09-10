@@ -13,16 +13,17 @@ LetsBall.Routers.Router = Backbone.Router.extend({
   },
 
   createNewGame: function () {
-    // if (!LetsBall.current_user) {
-    //   Backbone.history.navigate("", {trigger: true});
-    // }
-    var that = this;
-    var newGame = new LetsBall.Models.Game();
-    var newGameForm = new LetsBall.Views.NewGame({
-      model: newGame,
-      collection: that.collection
-    });
-    this._swapView(newGameForm);
+    if (!LetsBall.current_user.id) {
+      window.location.href = 'session/new';
+    } else {
+      var that = this;
+      var newGame = new LetsBall.Models.Game();
+      var newGameForm = new LetsBall.Views.NewGame({
+        model: newGame,
+        collection: that.collection
+      });
+      this._swapView(newGameForm);
+    }
   },
 
   _swapView: function (view) {

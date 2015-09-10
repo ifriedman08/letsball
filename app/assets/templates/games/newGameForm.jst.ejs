@@ -3,7 +3,7 @@
 </h1>
 <% var now = new Date(); %>
 <% var year = 1900 + now.getYear(); %>
-<% var month = ('0' + now.getMonth()).slice(-2); %>
+<% var month = ('0' + (now.getMonth() + 1)).slice(-2); %>
 <% var wday = now.getDay(); %>
 <% var date = ('0' + now.getDate()).slice(-2); %>
 <% var hours = ('0' + now.getHours()).slice(-2); %>
@@ -27,9 +27,9 @@
 <br>
 <select class="select-level">
   <option value="">Select Level</option>
-  <option value="1">Light</option>
-  <option value="2">Fast</option>
-  <option value="3">Expert</option>
+  <option value="1">1 - Light</option>
+  <option value="2">2 - Fast</option>
+  <option value="3">3 - Expert</option>
 </select>
 <br>
 <input class="byob-box" type="checkbox">Bring Your Own Ball
@@ -49,6 +49,6 @@ sports_arr.forEach(function (sport) {
   var option = $(option)
   option.val(sport)
   option.html(sport)
-  $('.select_sport').append(option)
+  $('.select-sport').append(option)
 })
 </script>

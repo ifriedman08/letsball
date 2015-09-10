@@ -14,9 +14,14 @@
  *= require_self
  */
 #content {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 75px;
   left: 0;
   bottom: 0;
   right: 0;
+}
+
+.nav-bar {
+  position: static;
+  height: 75px;
 }
