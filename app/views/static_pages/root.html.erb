@@ -33,7 +33,7 @@
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-          zoom: 15
+          zoom: 5
         });
         var infoWindow = new google.maps.InfoWindow({map: map});
 
@@ -55,7 +55,22 @@
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
         }
-      }
+
+        var allGames = new LetsBall.Collections.Games();
+        allGames.fetch(
+          success: function () {
+            allGames.each( function (game) {
+              var lat = game.attributes.latitude;
+              var long = game.attributes.longitude;
+              var marker = new google.maps.Marker({
+                position: {lat: lat, lng: long},
+                map: map,
+                title: 'Level-'+ game.attributes.level +' '+game.attributes.sport
+              });
+            })
+          }
+        );
+      
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
@@ -65,6 +80,7 @@
       }
 
       initMap();
+
     </script>
   </body>
 </html>
