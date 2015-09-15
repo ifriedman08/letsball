@@ -42,7 +42,7 @@
 }
 
 .nav-bar > h1 {
-  float: right;
+  float: none;
 }
 
 #map {

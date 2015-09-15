@@ -36,6 +36,7 @@ LetsBall.Routers.Router = Backbone.Router.extend({
     if (!LetsBall.current_user.id) {
       window.location.href = 'session/new';
     } else {
+      LetsBall.map = $('#map');
       var that = this;
       var newGame = new LetsBall.Models.Game();
       var newGameForm = new LetsBall.Views.NewGame({
