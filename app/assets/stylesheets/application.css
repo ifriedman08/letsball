@@ -23,7 +23,11 @@
 }
 
 .nav-bar {
-  position: static;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 999;
   height: 100px;
   border-bottom: 1px black solid;
 }
@@ -48,9 +52,38 @@
 
 #map {
   display: inline-block;
-  position: absolute;
+  position: fixed;
+  height: 100%
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
+}
+
+.new-game-form-div {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  text-align: center;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 46px;
+  border-radius: 3px;
+  border: 1px black solid;
+}
+
+.new-game-form-div > #map-canvas {
+  height: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+div.background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.4;
 }

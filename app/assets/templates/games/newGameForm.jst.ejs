@@ -1,42 +1,46 @@
-<h1>
-  new game form
-</h1>
-<% var now = new Date(); %>
-<% var year = 1900 + now.getYear(); %>
-<% var month = ('0' + (now.getMonth() + 1)).slice(-2); %>
-<% var wday = now.getDay(); %>
-<% var date = ('0' + now.getDate()).slice(-2); %>
-<% var hours = ('0' + now.getHours()).slice(-2); %>
-<% var minutes = ('0' + now.getMinutes()).slice(-2); %>
+<div class="background"></div>
+<div class="new-game-form-div">  
+  <h1>
+    Tryna Ball?
+  </h1>
+  <% var now = new Date(); %>
+  <% var year = 1900 + now.getYear(); %>
+  <% var month = ('0' + (now.getMonth() + 1)).slice(-2); %>
+  <% var wday = now.getDay(); %>
+  <% var date = ('0' + now.getDate()).slice(-2); %>
+  <% var hours = ('0' + now.getHours()).slice(-2); %>
+  <% var minutes = ('0' + now.getMinutes()).slice(-2); %>
 
-<h2>Where?</h2>
-<input id="map-canvas">
-</input>
+  <h2>Where?</h2>
+  <input id="map-canvas">
+  </input>
 
-<h2>When?</h2>
-<input class="date-input" type="date" value="<%= year + '-' + month + '-' + date %>">
-<br>
-<input class="time-input" type="time" value="<%= hours + ':' + minutes + ':' +'00'%>">
+  <h2>When?</h2>
+  <input class="date-input" type="date" value="<%= year + '-' + month + '-' + date %>"> @
+  <input class="time-input" type="time" value="<%= hours + ':' + minutes + ':' +'00'%>">
 
 
-<h2>What?</h2>
+  <h2>What?</h2>
 
-<select class="select-sport">
-  <option value="">Select Sport</option>
-</select>
-<br>
-<select class="select-level">
-  <option value="">Select Level</option>
-  <option value="1">1 - Light</option>
-  <option value="2">2 - Fast</option>
-  <option value="3">3 - Expert</option>
-</select>
-<br>
-<input class="byob-box" type="checkbox">Bring Your Own Ball
-<br>
-<input class="show-phone-box" type="checkbox">Show my phone number
-<br>
-<button class="submit-game">Let's Ball</button>
+  <select class="select-sport">
+    <option value="">Select Sport</option>
+  </select>
+
+  <select class="select-level">
+    <option value="">Select Level</option>
+    <option value="1">1 - Light</option>
+    <option value="2">2 - Fast</option>
+    <option value="3">3 - Expert</option>
+  </select>
+  <br>
+  <br>
+  <input class="byob-box" type="checkbox">Bring Your Own Ball
+  <br>
+  <input class="show-phone-box" type="checkbox">Show my phone number
+  <br>
+  <br>
+  <button class="submit-game">Let's Ball!</button>
+</div>
 
 <script type="text/javascript">
 

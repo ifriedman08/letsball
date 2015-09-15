@@ -2,7 +2,8 @@ LetsBall.Views.NewGame = Backbone.View.extend({
   template: JST['games/newGameForm'],
 
   events: {
-    'click button.submit-game': 'saveGame',
+    'click h1': 'closeForm',
+    'click button.submit-game': 'saveGame'
   },
 
   setupGame: function () {
@@ -36,10 +37,16 @@ LetsBall.Views.NewGame = Backbone.View.extend({
     });
   },
 
+  closeForm: function (event) {
+    event.preventDefault();
+    debugger
+    $('.new-game-form-div').remove();
+    $('.background').remove();
+  },
+
   render: function () {
     var that = this;
     var content = this.template({ });
-
     this.$el.html(content);
     return this;
   }

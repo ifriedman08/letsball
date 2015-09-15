@@ -2,7 +2,7 @@ LetsBall.Views.Dash = Backbone.View.extend({
   template: JST['dash'],
 
   initialize: function () {
-    
+
   },
 
   render: function () {
