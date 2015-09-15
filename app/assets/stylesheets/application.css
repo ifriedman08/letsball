@@ -27,10 +27,28 @@
   height: 100px;
 }
 
+.nav-bar > * {
+    top: 50%;
+    transform: translateY(-50%);
+    margin: auto 12px;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+.new-game-link, form.button_to {
+  float: right;
+}
+
+.nav-bar > h1 {
+  float: right;
+}
+
 #map {
   display: inline-block;
   position: absolute;
-  top: 100px;
+  top: 0;
   left: 0;
   bottom: 0;
   right: 0;

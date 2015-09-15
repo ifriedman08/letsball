@@ -16,8 +16,7 @@ LetsBall.Routers.Router = Backbone.Router.extend({
     });
     this._swapView(dash);
     var allGames = new LetsBall.Collections.Games();
-    allGames.fetch();
-    window.onload = function () {
+    var setMarkers = function () {
       allGames.each( function (game) {
         var lat = game.attributes.latitude;
         var long = game.attributes.longitude;
@@ -28,6 +27,9 @@ LetsBall.Routers.Router = Backbone.Router.extend({
         });
       });
     };
+    allGames.fetch({
+      success: setMarkers
+    });
   },
 
   createNewGame: function () {
