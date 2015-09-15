@@ -15,7 +15,7 @@
 //= require underscore
 //= require backbone
 //= require letsball
-//= require spinner
+//= require-tree ./utils
 //= require_tree ../templates
 //= require_tree ./models
 //= require_tree ./collections
