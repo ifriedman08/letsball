@@ -31,6 +31,7 @@ gem 'faker'
 gem 'underscore-rails'
 
 gem 'gmaps4rails'
+gem 'sqlite3'
 
 gem 'rails_12factor', group: :production
 # Use Unicorn as the app server
