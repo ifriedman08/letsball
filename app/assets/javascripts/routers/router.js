@@ -10,11 +10,73 @@ LetsBall.Routers.Router = Backbone.Router.extend({
   },
 
   dashboard: function () {
-    var that = this;
-    var dash = new LetsBall.Views.Dash({
-      collection: that.collection
-    });
-    this._swapView(dash);
+    var mapDiv = $("<div id='map'>");
+    $('#content').append(mapDiv);
+    $('#map').css('opacity', 0);
+    $('#content').spin();
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        // center: {lat: -34.397, lng: 150.644},
+        zoom: 12
+      });
+      var infoWindow = new google.maps.InfoWindow({map: map});
+
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          map.setCenter(pos);
+        }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+
+      map.addListener('tilesloaded', function() {
+        $('#content').spin(false);
+        $('#map').css('opacity', 1);
+      });
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+                            'Error: The Geolocation service failed.' :
+                            'Error: Your browser doesn\'t support geolocation.');
+    }
+
+    var styleArray = [
+      {
+        featureType: "all",
+        stylers: [
+          { saturation: -80 }
+        ]
+      },{
+        featureType: "road.arterial",
+        elementType: "geometry",
+        stylers: [
+          { hue: "#00ffee" },
+          { saturation: 50 }
+        ]
+      },{
+        featureType: "poi.business",
+        elementType: "labels",
+        stylers: [
+          { visibility: "off" }
+        ]
+      }
+    ];
+    initMap();
+    map.setOptions({styles: styleArray});
     var allGames = new LetsBall.Collections.Games();
     var setMarkers = function () {
       allGames.each( function (game) {
@@ -30,13 +92,15 @@ LetsBall.Routers.Router = Backbone.Router.extend({
     allGames.fetch({
       success: setMarkers
     });
+
+
   },
 
   createNewGame: function () {
     if (!LetsBall.current_user.id) {
       window.location.href = 'session/new';
     } else {
-      LetsBall.map = $('#map');
+      // LetsBall.map = $('#map');
       var that = this;
       var newGame = new LetsBall.Models.Game();
       var newGameForm = new LetsBall.Views.NewGame({
