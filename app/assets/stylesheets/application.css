@@ -14,8 +14,9 @@
  *= require_self
  */
 #content {
-  position: fixed;
-  top: 75px;
+  display: inline-block;
+  position: absolute;
+  top: 100px;
   left: 0;
   bottom: 0;
   right: 0;
@@ -23,5 +24,14 @@
 
 .nav-bar {
   position: static;
-  height: 75px;
+  height: 100px;
+}
+
+#map {
+  display: inline-block;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }

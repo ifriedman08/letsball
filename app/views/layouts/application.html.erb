@@ -6,6 +6,7 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <% api_key = ENV['google_maps_api'] %>
+  <link rel="icon" href="<%= asset_path 'ball.png' %>">
   <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?<%= api_key %>&libraries=places">
   </script>
@@ -13,9 +14,11 @@
 </head>
 <body>
   <section class="nav-bar">
+    <a href="#"><img src="<%= asset_path 'Letsball-logo.png' %>" alt="" /></a>
     <% if signed_in? %>
       <h1><%= "Hi there, #{current_user.email}" %></h1>
       <%= button_to "Log Out", session_url, method: :delete %>
+    <% else %>
     <% end %>
   </section>
 

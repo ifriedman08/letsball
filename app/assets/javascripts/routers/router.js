@@ -5,11 +5,14 @@ LetsBall.Routers.Router = Backbone.Router.extend({
   },
 
   routes: {
+    '': 'dashboard',
     'games/new': 'createNewGame'
   },
 
   dashboard: function () {
-    alert('Dash');
+    debugger
+    var dash = new LetsBall.Views.Dash({});
+    this._swapView(dash);
   },
 
   createNewGame: function () {

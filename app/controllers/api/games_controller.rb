@@ -5,6 +5,7 @@ class Api::GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+    @game.user_id = current_user.id
     if @game.save
       render json: @game
     else
@@ -18,7 +19,7 @@ class Api::GamesController < ApplicationController
   end
 
   def index
-    @games = Game.all
+    @games = Game.where("time > ?", Time.now)
     render json: @games
   end
 

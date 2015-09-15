@@ -31,7 +31,7 @@ LetsBall.Views.NewGame = Backbone.View.extend({
     newGame.save({},{
       success: function () {
         var id = newGame.get('id');
-        Backbone.history.navigate('games/'+id, {trigger: true});
+        Backbone.history.navigate('', {trigger: true});
       }
     });
   },
