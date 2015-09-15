@@ -10,9 +10,24 @@ LetsBall.Routers.Router = Backbone.Router.extend({
   },
 
   dashboard: function () {
-    debugger
-    var dash = new LetsBall.Views.Dash({});
+    var that = this;
+    var dash = new LetsBall.Views.Dash({
+      collection: that.collection
+    });
     this._swapView(dash);
+    var allGames = new LetsBall.Collections.Games();
+    allGames.fetch();
+    window.onload = function () {
+      allGames.each( function (game) {
+        var lat = game.attributes.latitude;
+        var long = game.attributes.longitude;
+        var marker = new google.maps.Marker({
+          position: {lat: lat, lng: long},
+          map: map,
+          title: 'Level-'+ game.attributes.level +' '+game.attributes.sport
+        });
+      });
+    };
   },
 
   createNewGame: function () {

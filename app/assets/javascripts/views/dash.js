@@ -3,8 +3,8 @@ LetsBall.Views.Dash = Backbone.View.extend({
 
   render: function () {
     var that = this;
+    this.collection.fetch();
     var content = this.template({});
-
     this.$el.html(content);
     return this;
   }

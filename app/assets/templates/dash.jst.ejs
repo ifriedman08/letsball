@@ -62,17 +62,4 @@
   ];
   initMap();
   map.setOptions({styles: styleArray});
-  var allGames = new LetsBall.Collections.Games();
-  allGames.fetch();
-  window.onload = function () {
-    allGames.each( function (game) {
-      var lat = game.attributes.latitude;
-      var long = game.attributes.longitude;
-      var marker = new google.maps.Marker({
-        position: {lat: lat, lng: long},
-        map: map,
-        title: 'Level-'+ game.attributes.level +' '+game.attributes.sport
-      });
-    })
-  }
 </script>
