@@ -93,8 +93,6 @@ LetsBall.Routers.Router = Backbone.Router.extend({
     allGames.fetch({
       success: setMarkers
     });
-
-
   },
 
   createNewGame: function () {
@@ -107,7 +105,7 @@ LetsBall.Routers.Router = Backbone.Router.extend({
         model: newGame,
         collection: that.collection
       });
-      $('#content').append(newGameForm.template);
+      newGameForm.render();
     }
   },
 

@@ -2,7 +2,6 @@ LetsBall.Views.NewGame = Backbone.View.extend({
   template: JST['games/newGameForm'],
 
   events: {
-    'click h1': 'closeForm',
     'click button.submit-game': 'saveGame'
   },
 
@@ -27,6 +26,7 @@ LetsBall.Views.NewGame = Backbone.View.extend({
   },
 
   saveGame: function (event) {
+    console.log('saving');
     event.preventDefault();
     var newGame = this.setupGame();
     newGame.save({},{
@@ -47,7 +47,7 @@ LetsBall.Views.NewGame = Backbone.View.extend({
   render: function () {
     var that = this;
     var content = this.template({ });
-    this.$el.html(content);
+    $('body').append(content);
     return this;
   }
 

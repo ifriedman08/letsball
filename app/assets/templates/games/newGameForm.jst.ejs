@@ -1,5 +1,5 @@
 <div class="background"></div>
-<div class="new-game-form-div">  
+<div class="new-game-form-div">
   <h1>
     Tryna Ball?
   </h1>
@@ -12,7 +12,7 @@
   <% var minutes = ('0' + now.getMinutes()).slice(-2); %>
 
   <h2>Where?</h2>
-  <input id="map-canvas">
+  <input id="place-input">
   </input>
 
   <h2>When?</h2>
@@ -44,7 +44,7 @@
 
 <script type="text/javascript">
 
-var input = document.getElementById('map-canvas')
+var input = document.getElementById('place-input')
 var autocomplete = new google.maps.places.Autocomplete(input)
 
 var sports_arr = [ 'Basketball', 'Soccer', 'Football', 'Tennis', 'Kickball', 'Baseball', 'Frisbee', 'Rugby', 'Quidditch' ].sort();

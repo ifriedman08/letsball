@@ -13,9 +13,13 @@
  *= require_tree .
  *= require_self
  */
+* {
+  font-family: 'Permanent Marker';
+}
+
 #content {
   display: inline-block;
-  position: absolute;
+  position: fixed;
   top: 101px;
   left: 0;
   bottom: 0;
@@ -53,7 +57,7 @@
 #map {
   display: inline-block;
   position: absolute;
-  height: 100%
+  height: 100%;
   top: 0;
   left: 0;
   bottom: 0;
@@ -62,8 +66,9 @@
 
 .new-game-form-div {
   position: absolute;
-  top: 120px;
+  top: 150px;
   left: 50%;
+  margin-bottom: 50px;
   text-align: center;
   transform: translateX(-50%);
   background-color: white;
@@ -72,15 +77,15 @@
   border: 1px black solid;
 }
 
-.new-game-form-div > #map-canvas {
+.new-game-form-div > #place-input {
   height: 50px;
   width: 100%;
   text-align: center;
 }
 
 div.background {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 101px;
   bottom: 0;
   right: 0;
   left: 0;
