@@ -1,6 +1,10 @@
 LetsBall.Views.NewGame = Backbone.View.extend({
   template: JST['games/newGameForm'],
 
+  initialize: function () {
+    // $('div.background').onClick('click', this.closeForm);
+  },
+
   events: {
     'click button.submit-game': 'saveGame',
     'click div.background': 'closeForm'
@@ -31,8 +35,18 @@ LetsBall.Views.NewGame = Backbone.View.extend({
     var newGame = this.setupGame();
     newGame.save({},{
       success: function () {
-        var id = newGame.get('id');
         Backbone.history.navigate('', {trigger: true});
+        // LetsBall.addMarkers();
+        var lat = newGame.attributes.latitude;
+        var long = newGame.attributes.longitude;
+        var gameId = newGame.attributes.id;
+        var marker = new google.maps.Marker({
+          gameId: gameId,
+          position: {lat: lat, lng: long},
+          map: map,
+          animation: google.maps.Animation.DROP,
+          title: 'Level-'+ newGame.attributes.level +' '+newGame.attributes.sport
+        });
       }
     });
   },
@@ -46,7 +60,7 @@ LetsBall.Views.NewGame = Backbone.View.extend({
   render: function () {
     var that = this;
     var content = this.template({ });
-    $('#content').append(content);
+    this.$el.html(content);
     return this;
   }
 
