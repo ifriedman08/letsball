@@ -35,6 +35,9 @@
             map: map,
             title: 'Level-'+ game.attributes.level +' '+game.attributes.sport,
           });
+          marker.addListener('mouseout', function () {
+            $('#prev').remove();
+          })
           marker.addListener('mouseover', function () {
             var game = new LetsBall.Models.Game({id: this.gameId});
             game.fetch({

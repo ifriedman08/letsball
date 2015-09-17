@@ -46,7 +46,7 @@
     float: left;
 }
 
-.new-game-link, form.button_to {
+.new-game-link, form.button_to, .reload-map {
   float: right;
 }
 
@@ -89,4 +89,15 @@ div.background {
   left: 0;
   background-color: black;
   opacity: 0.4;
+}
+
+#prev {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 600px;
+  background-color: white;
+  z-index: 556;
+  border: 1px black solid;
 }

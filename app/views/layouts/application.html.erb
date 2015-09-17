@@ -25,6 +25,7 @@
     <% if signed_in? %>
       <%= button_to "Log Out", session_url, method: :delete %>
       <a class="new-game-link" href="#/games/new">Create New Game</a>
+      <a class="reload-map" href="javascript:history.go(0)">Reload Map</a>
       <h1><%= "Hi there, #{current_user.email}" %></h1>
     <% else %>
       <a href="session/new">Sign In</a>
