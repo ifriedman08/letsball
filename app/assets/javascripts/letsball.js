@@ -4,8 +4,8 @@ window.LetsBall = {
   Views: {},
   Routers: {},
   initialize: function () {
-    LetsBall.showGame = function(gameId) {
-      console.log(gameId);
+    LetsBall.showGamePrev = function(game) {
+      console.log(game);
     };
     var router = new LetsBall.Routers.Router();
     Backbone.history.start();

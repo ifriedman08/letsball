@@ -25,7 +25,7 @@
         // LetsBall.addAllMarkers;
         var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
         map.setOptions({styles: styles});
-        LetsBall.addMarker = function (game) {
+        LetsBall.addMarker = function (game, drop) {
           var lat = game.attributes.latitude;
           var long = game.attributes.longitude;
           var gameId = game.get('id');
@@ -33,15 +33,20 @@
             gameId: gameId,
             position: {lat: lat, lng: long},
             map: map,
-            title: 'Level-'+ game.attributes.level +' '+game.attributes.sport
+            title: 'Level-'+ game.attributes.level +' '+game.attributes.sport,
           });
           marker.addListener('mouseover', function () {
-            LetsBall.showGame(this.gameId);
+            var game = new LetsBall.Models.Game({id: this.gameId});
+            game.fetch({
+              success: function() {
+                LetsBall.showGamePrev(game);
+              }
+            })
           });
         }
         LetsBall.addAllMarkers = function () {
           LetsBall.allGames.each(function (game) {
-            LetsBall.addMarker(game)
+            LetsBall.addMarker(game, false)
           })
         }
         LetsBall.allGames = new LetsBall.Collections.Games();
@@ -51,7 +56,7 @@
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
             // center: {lat: -34.397, lng: 150.644},
-            zoom: 11,
+            zoom: 13,
             disableDefaultUI: true,
           });
           // var infoWindow = new google.maps.InfoWindow({map: map});

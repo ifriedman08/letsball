@@ -36,7 +36,6 @@ LetsBall.Views.NewGame = Backbone.View.extend({
     newGame.save({},{
       success: function () {
         Backbone.history.navigate('', {trigger: true});
-        // LetsBall.addMarkers();
         var lat = newGame.attributes.latitude;
         var long = newGame.attributes.longitude;
         var gameId = newGame.attributes.id;
@@ -44,10 +43,18 @@ LetsBall.Views.NewGame = Backbone.View.extend({
           gameId: gameId,
           position: {lat: lat, lng: long},
           map: map,
-          animation: google.maps.Animation.DROP,
-          title: 'Level-'+ newGame.attributes.level +' '+newGame.attributes.sport
+          title: 'Level-'+ newGame.attributes.level +' '+newGame.attributes.sport,
+          animation: google.maps.Animation.DROP
         });
-      }
+        marker.addListener('mouseover', function () {
+          var game = new LetsBall.Models.Game({id: this.gameId});
+          game.fetch({
+            success: function() {
+              LetsBall.showGamePrev(game);
+            }
+          });
+        });
+       }
     });
   },
 
