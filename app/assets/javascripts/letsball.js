@@ -6,9 +6,10 @@ window.LetsBall = {
   initialize: function () {
     LetsBall.showGamePrev = function(game) {
       var gamePrev = $("<div id=prev>");
+      gamePrev.html(game.get('sport'));
       $('body').append(gamePrev);
-      gamePrev.show("slide", { direction: "left" }, 1000);
-      console.log(game);
+      debugger
+
     };
     var router = new LetsBall.Routers.Router();
     Backbone.history.start();

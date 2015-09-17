@@ -46,6 +46,9 @@ LetsBall.Views.NewGame = Backbone.View.extend({
           title: 'Level-'+ newGame.attributes.level +' '+newGame.attributes.sport,
           animation: google.maps.Animation.DROP
         });
+        marker.addListener('mouseout', function () {
+          $('#prev').remove();
+        });
         marker.addListener('mouseover', function () {
           var game = new LetsBall.Models.Game({id: this.gameId});
           game.fetch({

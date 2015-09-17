@@ -12,6 +12,14 @@
   <body>
     <div id="map">
     </div>
+    <div id="dash">
+      <div class="prev">
+
+      </div>
+      <div class="controls">
+
+      </div>
+    </div>
     <div id="content">
     </div>
     <script type="text/javascript">
@@ -20,6 +28,7 @@
       $(function () {
         $('#content').empty();
         $('#map').css('opacity', 0);
+        $('#content').css('width', '70%');
         $('#content').spin();
         initMap();
         // LetsBall.addAllMarkers;
@@ -85,6 +94,7 @@
 
           map.addListener('tilesloaded', function() {
             $('#content').spin(false);
+          $('#content').css('width', '100%');
             $('#map').css('opacity', 1);
             $('#map').css('position', 'fixed');
           });
