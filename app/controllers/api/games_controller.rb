@@ -43,6 +43,6 @@ class Api::GamesController < ApplicationController
   end
 
   def game_params
-    params.require(:game).permit(:time, :latitude, :longitude, :sport, :level, :comments)
+    params.require(:game).permit(:time, :latitude, :longitude, :sport, :level, :comments, :byob, :show_number, :place_name)
   end
 end

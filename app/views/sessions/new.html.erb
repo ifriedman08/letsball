@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>New User</title>
+    <title>Log in here:</title>
   </head>
   <body>
-    <form class="" action="<%= session_url %>" method="post">
+    <form class="sign-in-form" action="<%= session_url %>" method="post">
       <%= auth_token_input %>
       <h1>Sign In</h1>
       <p class="errors"><%= flash[:errors].join("<br>").html_safe if flash[:errors] %></p>

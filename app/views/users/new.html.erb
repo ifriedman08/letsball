@@ -5,7 +5,7 @@
     <title>New User</title>
   </head>
   <body>
-    <form class="" action="<%= users_url %>" method="post">
+    <form class="sign-up-form" action="<%= users_url %>" method="post">
       <%= auth_token_input %>
       <h1>New User Sign Up</h1>
       <p class="errors"><%= flash[:errors].join("<br>").html_safe if flash[:errors] %></p>

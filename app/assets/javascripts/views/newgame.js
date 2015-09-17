@@ -15,11 +15,13 @@ LetsBall.Views.NewGame = Backbone.View.extend({
     var place = autocomplete.getPlace();
     var latitude = place.geometry.location.lat();
     var longitude = place.geometry.location.lng();
+    var place_name = place.name;
     var now = new Date();
     var tzo = now.getTimezoneOffset();
     newGame.set({
       'latitude': latitude,
       'longitude': longitude,
+      'place_name': place_name,
       'time': new Date($('.date-input').val()+ ' ' + $('.time-input').val()),
       'sport': $('.select-sport').val(),
       'level': $('.select-level').val(),
@@ -47,7 +49,8 @@ LetsBall.Views.NewGame = Backbone.View.extend({
           animation: google.maps.Animation.DROP
         });
         marker.addListener('mouseout', function () {
-          $('#prev').remove();
+          $('.prev-container').empty();
+          $('.prev-container').html("<br><br><br><br>Hover over the markers to show game info.<br>Click them for more details.");
         });
         marker.addListener('mouseover', function () {
           var game = new LetsBall.Models.Game({id: this.gameId});
@@ -63,8 +66,7 @@ LetsBall.Views.NewGame = Backbone.View.extend({
 
   closeForm: function (event) {
     event.preventDefault();
-    $('.new-game-form-div').remove();
-    $('.background').remove();
+    Backbone.history.navigate('', {trigger: true});
   },
 
   render: function () {
@@ -73,5 +75,4 @@ LetsBall.Views.NewGame = Backbone.View.extend({
     this.$el.html(content);
     return this;
   }
-
 });

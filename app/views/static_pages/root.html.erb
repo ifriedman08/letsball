@@ -10,11 +10,15 @@
     <meta charset="utf-8">
   </head>
   <body>
-    <div id="map">
-    </div>
+    <div id="loader"></div>
+    <div id="map"></div>
     <div id="dash">
-      <div class="prev">
-
+      <div class="prev-container">
+        <br>
+        <br>
+        <br>
+        <br>
+        Hover over the markers to show game info.<br>Click them for more details.
       </div>
       <div class="controls">
 
@@ -26,12 +30,10 @@
       $(window.LetsBall.initialize)
 
       $(function () {
-        $('#content').empty();
+        // $('#content').empty();
         $('#map').css('opacity', 0);
-        $('#content').css('width', '70%');
-        $('#content').spin();
+        $('#loader').spin();
         initMap();
-        // LetsBall.addAllMarkers;
         var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
         map.setOptions({styles: styles});
         LetsBall.addMarker = function (game, drop) {
@@ -45,7 +47,8 @@
             title: 'Level-'+ game.attributes.level +' '+game.attributes.sport,
           });
           marker.addListener('mouseout', function () {
-            $('#prev').remove();
+            $('.prev-container').empty();
+            $('.prev-container').html("<br><br><br><br>Hover over the markers to show game info.<br>Click them for more details.");
           })
           marker.addListener('mouseover', function () {
             var game = new LetsBall.Models.Game({id: this.gameId});
@@ -93,8 +96,7 @@
           }
 
           map.addListener('tilesloaded', function() {
-            $('#content').spin(false);
-          $('#content').css('width', '100%');
+            $('#loader').spin(false);
             $('#map').css('opacity', 1);
             $('#map').css('position', 'fixed');
           });

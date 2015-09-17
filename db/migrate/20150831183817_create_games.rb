@@ -3,6 +3,7 @@ class CreateGames < ActiveRecord::Migration
     create_table :games do |t|
       t.float :latitude, null: false
       t.float :longitude, null: false
+      t.string :place_name, null: false
       t.datetime :time, null: false
       t.integer :level, null: false
       t.string :sport, null: false

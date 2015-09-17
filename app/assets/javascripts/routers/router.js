@@ -29,7 +29,7 @@ LetsBall.Routers.Router = Backbone.Router.extend({
       newGameForm.render();
     }
   },
-  // 
+  //
   // showGame: function (gameId) {
   //   alert(gameId);
   // },

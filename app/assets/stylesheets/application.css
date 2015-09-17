@@ -17,6 +17,14 @@
   font-family: 'Exo 2';
 }
 
+#loader {
+  position: fixed;
+  top: 101px;
+  width: 70%;
+  left: 0;
+  bottom: 0;
+}
+
 #content {
   display: inline-block;
   position: absolute;
@@ -30,10 +38,17 @@
   width: 100%;
   position: fixed;
   top: 0;
+  left: 0;
   background-color: white;
   z-index: 999;
   height: 100px;
   border-bottom: 1px black solid;
+  clear: both;
+}
+
+.sign-up-form, .sign-in-form {
+  position: absolute;
+  top: 101px;
 }
 
 .nav-bar > * {
@@ -46,7 +61,7 @@
     float: left;
 }
 
-.new-game-link, form.button_to, .reload-map {
+.new-game-link, form.button_to, .reload-map, .sign-up-link, .sign-in-link, .add-filters-link {
   float: right;
 }
 
@@ -59,16 +74,22 @@
   overflow: none;
   position: fixed;
   width: 70%;
-  border-right: 1px solid black;
   height: 100%;
+  top: 101px;
+  bottom: 0;
+  left: 0;
+
 }
 
 .new-game-form-div {
   position: absolute;
-  top: 150px;
+  top: 70px;
   left: 50%;
+  height: 500px;
+  width: 400px;
   margin-bottom: 50px;
   text-align: center;
+  padding: 1px 30px;
   transform: translateX(-50%);
   background-color: white;
   padding: 46px;
@@ -76,9 +97,18 @@
   border: 1px black solid;
 }
 
+.new-game-form-div > h1 {
+  font-size: 30px;
+}
+
+.new-game-form-div > * {
+  font-size: 20px;
+}
+
 .new-game-form-div > #place-input {
   height: 50px;
   width: 100%;
+  font-size: 20;
   text-align: center;
 }
 
@@ -92,14 +122,22 @@ div.background {
   opacity: 0.4;
 }
 
-#prev {
-  position: absolute;
-  top: 101px;
+#dash {
+  position: fixed;
   right: 0;
-  width: 300px;
-  height: 600px;
-  background-color: white;
-  z-index: 556;
-  border: 1px black solid;
-  border-top: none;
+  top: 101px;
+  width: 30%;
+  height: 100%;
+  border-left: 1px solid black;
+}
+
+.prev-container{
+  border-bottom: 1px solid black;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  background-color: rgb(71, 249, 225);
+  height: 200px;
 }

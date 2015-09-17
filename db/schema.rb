@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150902214705) do
   create_table "games", force: :cascade do |t|
     t.float    "latitude",                    null: false
     t.float    "longitude",                   null: false
+    t.string   "place_name",                  null: false
     t.datetime "time",                        null: false
     t.integer  "level",                       null: false
     t.string   "sport",                       null: false
