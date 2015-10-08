@@ -48,6 +48,7 @@ LetsBall.Views.NewGame = Backbone.View.extend({
           title: 'Level-'+ newGame.attributes.level +' '+newGame.attributes.sport,
           animation: google.maps.Animation.DROP
         });
+        LetsBall.allMarkers.push(marker);
         marker.addListener('mouseout', function () {
           $('.prev-container').empty();
           $('.prev-container').html("<br><br><br><br>Hover over the markers to show game info.<br>Click them for more details.");
@@ -62,6 +63,8 @@ LetsBall.Views.NewGame = Backbone.View.extend({
         });
        }
     });
+    console.log('fetching all games');
+    LetsBall.allGames.fetch();
   },
 
   closeForm: function (event) {
