@@ -854,7 +854,6 @@ Cluster.prototype.addMarker = function(marker) {
       this.calculateBounds_();
     }
   }
-
   marker.isAdded = true;
   this.markers_.push(marker);
 
