@@ -38,38 +38,6 @@
         var mc = new MarkerClusterer(map);
         var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
         map.setOptions({styles: styles});
-
-
-
-        LetsBall.addMarker = function (game, drop) {
-          // var lat = game.attributes.latitude;
-          // var long = game.attributes.longitude;
-          // var gameId = game.get('id');
-          var marker = new google.maps.Marker({
-            gameId: game.get('id'),
-            position: {lat: game.attributes.latitude, lng: game.attributes.longitude},
-            map: map,
-            title: 'Level-'+ game.attributes.level +' '+game.attributes.sport,
-          });
-          LetsBall.allMarkers.push(marker);
-          marker.addListener('mouseout', function () {
-            $('.prev-container').empty();
-            $('.prev-container').html("<br><br><br><br>Hover over the markers to show game info.<br>Click them for more details.");
-          })
-          marker.addListener('mouseover', function () {
-            var game = new LetsBall.Models.Game({id: this.gameId});
-            game.fetch({
-              success: function() {
-                LetsBall.showGamePrev(game);
-              }
-            })
-          });
-        }
-        LetsBall.addAllMarkers = function () {
-          LetsBall.allGames.each(function (game) {
-            LetsBall.addMarker(game, false)
-          })
-        }
         LetsBall.allGames = new LetsBall.Collections.Games();
         LetsBall.allGames.fetch({
           success: LetsBall.addAllMarkers
