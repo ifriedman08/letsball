@@ -74,25 +74,32 @@ LetsBall.addMarker = function (game, drop) {
     var game = new LetsBall.Models.Game({id: this.gameId});
     that = event
     game.fetch({
-      success: function() {
+      success: function(arg) {
         var previewContainerEl = $("<div class='prev-container'>")
         $('body').append(previewContainerEl);
         console.log('appended: ' + "pageX: " + cursorX + ", pageY: " + cursorY );
+        var height = 170;
+        date = new Date(arg.attributes.time);
+        console.log(arg.attributes);
+        $('div.prev-container').html(
+          'Level : ' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + date.toDateString() + '<br>@ ' + date.toLocaleTimeString()
+        );
+        tester = arg;
         $('div.prev-container').css({
           'width':'200px',
           'background-color':'white',
           'z-index':'999999',
           'border':'solid 2px black',
-          'height':'300px',
+          'height': height + 'px',
           'position':'absolute',
-          'top':cursorY - 300,
+          'top':cursorY - height,
           'left':cursorX
         })
-        previewContainerEl.mouseout( function () {
-          $('div.prev-container').remove();
-        });
       }
     });
+  });
+  marker.addListener('mouseout', function () {
+    $('div.prev-container').remove();
   });
 }
 
