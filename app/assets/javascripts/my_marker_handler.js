@@ -47,6 +47,7 @@ LetsBall.saveGame = function (event) {
         game.fetch({
           success: function() {
             $('body').append('div.prev-container');
+            // $('div.prev-container').css({ })
             console.log('appended');
           }
         });
@@ -68,19 +69,28 @@ LetsBall.addMarker = function (game, drop) {
     title: 'Level-'+ game.attributes.level +' '+game.attributes.sport,
   });
   LetsBall.allMarkers.push(marker);
-  marker.addListener('mouseout', function () {
-    $('div.prev-container').remove();
-
-  });
 
   marker.addListener('mouseover', function (event) {
     var game = new LetsBall.Models.Game({id: this.gameId});
     that = event
     game.fetch({
       success: function() {
-        $('body').append('div.prev-container');
+        var previewContainerEl = $("<div class='prev-container'>")
+        $('body').append(previewContainerEl);
         console.log('appended: ' + "pageX: " + cursorX + ", pageY: " + cursorY );
-
+        $('div.prev-container').css({
+          'width':'200px',
+          'background-color':'white',
+          'z-index':'999999',
+          'border':'solid 2px black',
+          'height':'300px',
+          'position':'absolute',
+          'top':cursorY - 300,
+          'left':cursorX
+        })
+        previewContainerEl.mouseout( function () {
+          $('div.prev-container').remove();
+        });
       }
     });
   });
