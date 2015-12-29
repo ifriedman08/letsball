@@ -20,7 +20,7 @@
 #loader {
   position: fixed;
   top: 101px;
-  width: 70%;
+  width: 100%;
   left: 0;
   bottom: 0;
 }
@@ -73,7 +73,7 @@
   display: block;
   overflow: none;
   position: fixed;
-  width: 70%;
+  width: 100%;
   height: 100%;
   top: 101px;
   bottom: 0;
@@ -120,24 +120,4 @@ div.background {
   left: 0;
   background-color: black;
   opacity: 0.4;
-}
-
-#dash {
-  position: fixed;
-  right: 0;
-  top: 101px;
-  width: 30%;
-  height: 100%;
-  border-left: 1px solid black;
-}
-
-.prev-container{
-  border-bottom: 1px solid black;
-  text-align: center;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 100%;
-  background-color: rgb(71, 249, 225);
-  height: 200px;
 }

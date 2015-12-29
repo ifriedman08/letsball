@@ -37,16 +37,17 @@ LetsBall.saveGame = function (event) {
         animation: google.maps.Animation.DROP
       });
       LetsBall.allMarkers.push(marker);
-      LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
       marker.addListener('mouseout', function () {
-        $('.prev-container').empty();
-        $('.prev-container').html("<br><br><br><br>Hover over the markers to show game info.<br>Click them for more details.");
+        $('div.prev-container').remove();
+
       });
+      LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
       marker.addListener('mouseover', function () {
         var game = new LetsBall.Models.Game({id: this.gameId});
         game.fetch({
           success: function() {
-            LetsBall.showGamePrev(game);
+            $('body').append('div.prev-container');
+            console.log('appended');
           }
         });
       });
@@ -68,16 +69,20 @@ LetsBall.addMarker = function (game, drop) {
   });
   LetsBall.allMarkers.push(marker);
   marker.addListener('mouseout', function () {
-    $('.prev-container').empty();
-    $('.prev-container').html("<br><br><br><br>Hover over the markers to show game info.<br>Click them for more details.");
-  })
-  marker.addListener('mouseover', function () {
+    $('div.prev-container').remove();
+
+  });
+
+  marker.addListener('mouseover', function (event) {
     var game = new LetsBall.Models.Game({id: this.gameId});
+    that = event
     game.fetch({
       success: function() {
-        LetsBall.showGamePrev(game);
+        $('body').append('div.prev-container');
+        console.log('appended: ' + "pageX: " + cursorX + ", pageY: " + cursorY );
+
       }
-    })
+    });
   });
 }
 

@@ -12,18 +12,6 @@
   <body>
     <div id="loader"></div>
     <div id="map"></div>
-    <div id="dash">
-      <div class="prev-container">
-        <br>
-        <br>
-        <br>
-        <br>
-        Hover over the markers to show game info.<br>Click them for more details.
-      </div>
-      <div class="controls">
-
-      </div>
-    </div>
     <div id="content">
     </div>
     <script type="text/javascript">
@@ -40,7 +28,10 @@
         map.setOptions({styles: styles});
         LetsBall.allGames = new LetsBall.Collections.Games();
         LetsBall.allGames.fetch({
-          success: LetsBall.addAllMarkers
+          success: function(){
+            LetsBall.addAllMarkers();
+            LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
+          }
         })
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
@@ -76,6 +67,10 @@
             $('#map').css('position', 'fixed');
           });
 
+          map.addListener('zoom_changed', function() {
+            LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
+          });
+
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
           infoWindow.setPosition(pos);
@@ -87,6 +82,10 @@
         var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
 
       }
+    })
+    $('body').mousemove(function(event){
+      cursorX = event.pageX;
+      cursorY = event.pageY;
     })
     </script>
   </body>

@@ -12,6 +12,9 @@ LetsBall.Routers.Router = Backbone.Router.extend({
   dashboard: function () {
     $('#content').empty();
     $('#content').css('z-index', '-2');
+    $(document).on('ready', function(){
+      LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
+    })
   },
 
   createNewGame: function () {
