@@ -77,29 +77,28 @@ LetsBall.addMarker = function (game, drop) {
       success: function(arg) {
         var previewContainerEl = $("<div class='prev-container'>")
         $('body').append(previewContainerEl);
-        console.log('appended: ' + "pageX: " + cursorX + ", pageY: " + cursorY );
-        var height = 170;
+        var height = 100;
+        var width = 150;
         date = new Date(arg.attributes.time);
-        console.log(arg.attributes);
         $('div.prev-container').html(
-          'Level : ' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + date.toDateString() + '<br>@ ' + date.toLocaleTimeString()
+          'Level : ' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + arg.attributes.place_name + '<br>' + date.toDateString() + '<br>@ ' + date.toLocaleTimeString()
         );
-        tester = arg;
         $('div.prev-container').css({
-          'width':'200px',
+          'width':width,
           'background-color':'white',
           'z-index':'999999',
           'border':'solid 2px black',
           'height': height + 'px',
+          'text-align': 'center',
           'position':'absolute',
-          'top':cursorY - height,
-          'left':cursorX
+          'top':cursorY - height - 5,
+          'left':cursorX - (width / 2)
         })
+        $('div.prev-container').mouseout(function () {
+          $('div.prev-container').remove();
+        });
       }
     });
-  });
-  marker.addListener('mouseout', function () {
-    $('div.prev-container').remove();
   });
 }
 
