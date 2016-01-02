@@ -37,21 +37,12 @@ LetsBall.saveGame = function (event) {
         animation: google.maps.Animation.DROP
       });
       LetsBall.allMarkers.push(marker);
+      marker.addListener('mouseover', LetsBall.addMarkerMouseOver(event, this));
       marker.addListener('mouseout', function () {
         $('div.prev-container').remove();
 
       });
       LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
-      marker.addListener('mouseover', function () {
-        var game = new LetsBall.Models.Game({id: this.gameId});
-        game.fetch({
-          success: function() {
-            $('body').append('div.prev-container');
-            // $('div.prev-container').css({ })
-            console.log('appended');
-          }
-        });
-      });
      }
   });
   console.log('fetching all games');
@@ -71,35 +62,8 @@ LetsBall.addMarker = function (game, drop) {
   LetsBall.allMarkers.push(marker);
 
   marker.addListener('mouseover', function (event) {
-    var game = new LetsBall.Models.Game({id: this.gameId});
-    that = event
-    game.fetch({
-      success: function(arg) {
-        var previewContainerEl = $("<div class='prev-container'>")
-        $('body').append(previewContainerEl);
-        var height = 100;
-        var width = 150;
-        date = new Date(arg.attributes.time);
-        $('div.prev-container').html(
-          'Level : ' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + arg.attributes.place_name + '<br>' + date.toDateString() + '<br>@ ' + date.toLocaleTimeString()
-        );
-        $('div.prev-container').css({
-          'width':width,
-          'background-color':'white',
-          'z-index':'999999',
-          'border':'solid 2px black',
-          'height': height + 'px',
-          'text-align': 'center',
-          'position':'absolute',
-          'top':cursorY - height - 5,
-          'left':cursorX - (width / 2)
-        })
-        $('div.prev-container').mouseout(function () {
-          $('div.prev-container').remove();
-        });
-      }
-    });
-  });
+    LetsBall.addMarkerMouseOver(event, this);
+  })
 }
 
 LetsBall.addAllMarkers = function () {
@@ -107,4 +71,36 @@ LetsBall.addAllMarkers = function () {
     LetsBall.addMarker(game, false)
   })
   LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
+}
+
+LetsBall.addMarkerMouseOver = function (event, marker) {
+  var game = new LetsBall.Models.Game({id: marker.gameId});
+  that = event
+  game.fetch({
+    success: function(arg) {
+      var previewContainerEl = $("<div class='prev-container'>")
+      $('body').append(previewContainerEl);
+      var height = 100;
+      var width = 150;
+      date = new Date(arg.attributes.time);
+      $('div.prev-container').html(
+        'Level : ' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + arg.attributes.place_name + '<br>' + date.toDateString() + '<br>@ ' + date.toLocaleTimeString()
+      );
+      $('div.prev-container').css({
+        'width':width,
+        'background-color':'white',
+        'z-index':'999999',
+        'border':'solid 2px black',
+        'height': height + 'px',
+        'cursor': 'none',
+        'text-align': 'center',
+        'position':'absolute',
+        'top': LetsBall.cursorY - (height / 2),
+        'left': LetsBall.cursorX - (width / 2)
+      })
+      $('div.prev-container').mouseout(function () {
+        $('div.prev-container').remove();
+      });
+    }
+  });
 }

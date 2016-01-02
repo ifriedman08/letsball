@@ -1073,6 +1073,39 @@ ClusterIcon.prototype.onAdd = function() {
   google.maps.event.addDomListener(this.div_, 'click', function() {
     that.triggerClusterClick();
   });
+  google.maps.event.addDomListener(this.div_, 'mouseover', function() {
+    var previewListContainerEl = $("<div class='prev-list-container'>")
+    var previewList = $("<ul class='prev-list'>")
+    previewListContainerEl.append(previewList)
+    that.cluster_.getMarkers().forEach(function(marker){
+      var game = new LetsBall.Models.Game({id: marker.gameId});
+      game.fetch({
+        success: function(arg) {
+          var previewListItem = $("<li> class='prev-list-item'")
+          date = new Date(arg.attributes.time);
+          previewListItem.text(
+            'Level : ' + arg.attributes.level + ',' + arg.attributes.sport + ',' + arg.attributes.place_name + ',' + date.toDateString() + ', @ ' + date.toLocaleTimeString()
+          );
+          $('ul.prev-list').append(previewListItem)
+        }
+      });
+    })
+    $('body').append(previewListContainerEl);
+    $('div.prev-list-container').mouseout(function () {
+      $('div.prev-list-container').remove();
+    });
+    $('div.prev-list-container').css({
+      'width': 'auto',
+      'height': '450px',
+      'background-color':'white',
+      'z-index':'999999',
+      'border':'solid 2px black',
+      'text-align': 'center',
+      'position':'absolute',
+      'top': LetsBall.cursorY,
+      'left': LetsBall.cursorX
+    })
+  });
 };
 
 
