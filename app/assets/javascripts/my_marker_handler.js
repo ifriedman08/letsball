@@ -73,20 +73,20 @@ LetsBall.addAllMarkers = function () {
   LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
 }
 
-LetsBall.addMarkerMouseOver = function (event, marker) {
+LetsBall.addMarkerMouseOver = function (event, marker) {  
   var game = new LetsBall.Models.Game({id: marker.gameId});
   that = event
   game.fetch({
     success: function(arg) {
-      var previewContainerEl = $("<div class='prev-container'>")
+      var previewContainerEl = $("<a href='#/games/" + marker.gameId + "' class='prev-container'>")
       $('body').append(previewContainerEl);
       var height = 100;
       var width = 150;
       date = new Date(arg.attributes.time);
-      $('div.prev-container').html(
+      $('a.prev-container').html(
         'Level : ' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + arg.attributes.place_name + '<br>' + date.toDateString() + '<br>@ ' + date.toLocaleTimeString()
       );
-      $('div.prev-container').css({
+      $('a.prev-container').css({
         'width':width,
         'background-color':'white',
         'z-index':'999999',
@@ -98,8 +98,8 @@ LetsBall.addMarkerMouseOver = function (event, marker) {
         'top': LetsBall.cursorY - (height / 2),
         'left': LetsBall.cursorX - (width / 2)
       })
-      $('div.prev-container').mouseout(function () {
-        $('div.prev-container').remove();
+      $('a.prev-container').mouseout(function () {
+        $('a.prev-container').remove();
       });
     }
   });

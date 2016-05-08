@@ -3,6 +3,7 @@ window.LetsBall = {
   Collections: {},
   Views: {},
   Routers: {},
+  isShowingCluster: false,
   initialize: function () {
     // LetsBall.showGamePrev = function(game) {
     //   if (game.get('level') === 1) {

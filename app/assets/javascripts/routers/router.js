@@ -6,7 +6,8 @@ LetsBall.Routers.Router = Backbone.Router.extend({
 
   routes: {
     '': 'dashboard',
-    'games/new': 'createNewGame'
+    'games/new': 'createNewGame',
+    'games/:id': 'showGame'
   },
 
   dashboard: function () {
@@ -33,9 +34,9 @@ LetsBall.Routers.Router = Backbone.Router.extend({
     }
   },
   //
-  // showGame: function (gameId) {
-  //   alert(gameId);
-  // },
+  showGame: function (gameId) {
+    alert(gameId);
+  },
 
   _swapView: function (view) {
     this.currentView && this.currentView.remove();
