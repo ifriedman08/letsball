@@ -41,7 +41,7 @@
   left: 0;
   background-color: white;
   z-index: 999;
-  height: 100px;
+  height: auto;
   border-bottom: 1px black solid;
   clear: both;
 }
@@ -51,18 +51,43 @@
   top: 101px;
 }
 
+.filter-background{
+  position: absolute;
+  background-color: black;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.4;
+}
+
+.filter-dash{
+  height: 60%;
+  width: 60%;
+  left: 50%;
+  top: 60%;
+  position: absolute;
+  background-color: white;
+  transform: translateY(-50%) translateX(-50%);
+  border-radius: 1%;
+  border: 1px solid black;
+}
+
 .nav-bar > * {
     top: 50%;
-    transform: translateY(-50%);
     margin: auto 12px;
     vertical-align: middle;
     position: relative;
-    display: inline-block;
     float: left;
+}
+
+.nav-links{
+  transform: translateY(50%);
 }
 
 .new-game-link, form.button_to, .reload-map, .sign-up-link, .sign-in-link, .add-filters-link {
   float: right;
+  display: inline-block;
 }
 
 .nav-bar > h1 {

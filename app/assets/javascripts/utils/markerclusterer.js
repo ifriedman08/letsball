@@ -187,7 +187,8 @@ function MarkerClusterer(map, opt_markers, opt_options) {
  * @private
  */
 MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ =
-    'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/' +
+    // 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/' +
+    'https://raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/'+
     'images/m';
 
 
@@ -1080,19 +1081,19 @@ ClusterIcon.prototype.onAdd = function() {
       var previewList = $("<ul class='prev-list'>")
       $('body').append(previewListContainerEl);
       previewListContainerEl.append(previewList);
-      // $('div.prev-list-container').css({
-      //   'width': 'auto',
-      //   'height': 'auto',
-      //   'background-color':'white',
-      //   'z-index':'999999',
-      //   'border':'solid 2px black',
-      //   'text-align': 'center',
-      //   'position':'absolute',
-      //   'top': LetsBall.cursorY - $(this).height(),
-      //   'left': LetsBall.cursorX - $(this).width()
-      //   // 'top': LetsBall.cursorY - 100,
-      //   // 'left': LetsBall.cursorX - 100
-      // })
+      $('div.prev-list-container').css({
+        'width': 'auto',
+        'height': 'auto',
+        'background-color':'white',
+        'z-index':'999999',
+        'border':'solid 2px black',
+        'text-align': 'center',
+        'position':'absolute',
+        'top': LetsBall.cursorY - $(this).height(),
+        'left': LetsBall.cursorX - $(this).width()
+        // 'top': LetsBall.cursorY - 100,
+        // 'left': LetsBall.cursorX - 100
+      })
       $('div.prev-list-container').mouseleave(function () {
         $('div.prev-list-container').remove();
         LetsBall.isShowingCluster = false;
@@ -1107,19 +1108,6 @@ ClusterIcon.prototype.onAdd = function() {
               'Level : ' + arg.attributes.level + ',' + arg.attributes.sport + ',' + arg.attributes.place_name + ',' + date.toDateString() + ', @ ' + date.toLocaleTimeString()
             );
             $('ul.prev-list').append(previewListItem)
-            $('div.prev-list-container').css({
-              'width': 'auto',
-              'height': 'auto',
-              'background-color':'white',
-              'z-index':'999999',
-              'border':'solid 2px black',
-              'text-align': 'center',
-              'position':'absolute',
-              'top': LetsBall.cursorY - $(this).height(),
-              'left': LetsBall.cursorX - $(this).width()
-              // 'top': LetsBall.cursorY - 100,
-              // 'left': LetsBall.cursorX - 100
-            })
           }
         });
       })

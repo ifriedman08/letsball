@@ -1,0 +1,35 @@
+
+<style>
+  ul {
+    list-style: none;
+  }
+</style>
+
+  <ul class="sportFilterList">
+    <li><input class="filter sport checkbox Baseball" type="checkbox" name="sport" value="Baseball">Baseball</li>
+    <li><input class="filter sport checkbox Basketball" type="checkbox" name="sport" value="Basketball">Basketball</li>
+    <li><input class="filter sport checkbox Football" type="checkbox" name="sport" value="Football">Football</li>
+    <li><input class="filter sport checkbox Frisbee" type="checkbox" name="sport" value="Frisbee">Frisbee</li>
+    <li><input class="filter sport checkbox Kickball" type="checkbox" name="sport" value="Kickball">Kickball</li>
+    <li><input class="filter sport checkbox Quidditch" type="checkbox" name="sport" value="Quidditch">Quidditch</li>
+    <li><input class="filter sport checkbox Rugby" type="checkbox" name="sport" value="Rugby">Rugby</li>
+    <li><input class="filter sport checkbox Soccer" type="checkbox" name="sport" value="Soccer">Soccer</li>
+    <li><input class="filter sport checkbox Tennis" type="checkbox" name="sport" value="Tennis">Tennis</li>
+  </ul>
+  <ul class="levelFilterList">
+    <li><input class="filter level 1 checkbox" type="checkbox" name="level" value="1">1</li>
+    <li><input class="filter level 2 checkbox" type="checkbox" name="level" value="2">2</li>
+    <li><input class="filter level 3 checkbox" type="checkbox" name="level" value="3">3</li>
+  </ul>
+  When?
+  <select class="filter time-selector" name="time" selected="Anytime">
+    <option class="Anytime" value="Anytime">Anytime</option>
+    <option class="day" value="day">Today</option>
+    <option class="week" value="week">This week</option>
+    <option class="month" value="month">This month</option>
+    <option class="year" value="year">This year</option>
+  </select>
+
+  <button id="update_filters">Update Filter</button>
+  <button id="remove_all_filters">Remove All Filters</button>
+  <button id="close_filter_modal">Close</button>

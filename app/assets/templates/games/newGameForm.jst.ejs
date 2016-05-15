@@ -48,7 +48,7 @@
 var input = document.getElementById('place-input')
 var autocomplete = new google.maps.places.Autocomplete(input)
 
-var sports_arr = [ 'Basketball', 'Soccer', 'Football', 'Tennis', 'Kickball', 'Baseball', 'Frisbee', 'Rugby', 'Quidditch' ].sort();
+var sports_arr = LetsBall.sports_arr;
 sports_arr.forEach(function (sport) {
   var option = document.createElement('option')
   var option = $(option)

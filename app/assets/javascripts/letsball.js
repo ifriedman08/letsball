@@ -4,6 +4,8 @@ window.LetsBall = {
   Views: {},
   Routers: {},
   isShowingCluster: false,
+  filters: {},
+  sports_arr: [ 'Basketball', 'Soccer', 'Football', 'Tennis', 'Kickball', 'Baseball', 'Frisbee', 'Rugby', 'Quidditch' ].sort(),
   initialize: function () {
     // LetsBall.showGamePrev = function(game) {
     //   if (game.get('level') === 1) {

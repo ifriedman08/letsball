@@ -19,7 +19,9 @@ class Api::GamesController < ApplicationController
   end
 
   def index
-    @games = Game.where("time > ?", Time.now)
+    allFutureGames = Game.where("time > ?", Time.now)
+    debugger
+    @games = allFutureGames.select{ |g| params[:sports].include?(g[:sport]) && params[:levels].include?(g[:level].to_s)}
     render json: @games
   end
 

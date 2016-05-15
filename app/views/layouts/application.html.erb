@@ -24,17 +24,18 @@
     <a href="/#"><img src="<%= asset_path 'Letsball-logo.png' %>" alt="" /></a>
     <% if signed_in? %>
       <%= button_to "Log Out", session_url, method: :delete %>
-      <a class="new-game-link" href="#/games/new">Create New Game</a>
-      <h1><%= "Hi there, #{current_user.email}" %></h1>
+      <a class="new-game-link nav-links" href="#/games/new">Create New Game</a>
+      <!-- <h1><%= "Hi there, #{current_user.email}" %></h1> -->
     <% else %>
-      <a class="sign-up-link" href="/users/new">Sign Up</a>
-      <a class="sign-in-link" href="/session/new">Sign In</a>
+      <a class="sign-up-link nav-links" href="/users/new">Sign Up</a>
+      <a class="sign-in-link nav-links" href="/session/new">Sign In</a>
     <% end %>
-    <a class="reload-map" href="/#">Reload Map</a>
-    <a class="add-filters-link" href="#">Add Filters</a>
+    <a class="reload-map nav-links" href="/#">Reload Map</a>
+    <a class="add-filters-link nav-links" href="#">Adjust Filters</a>
   </section>
 
 <%= yield %>
 
 </body>
+
 </html>
