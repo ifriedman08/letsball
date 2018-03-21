@@ -1,6 +1,6 @@
 // ==ClosureCompiler==
 // @compilation_level ADVANCED_OPTIMIZATIONS
-// @externs_url http://closure-compiler.googlecode.com/svn/trunk/contrib/externs/maps/google_maps_api_v3_3.js
+// @externs_url https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/maps/google_maps_api_v3.js
 // ==/ClosureCompiler==
 
 /**
@@ -17,6 +17,9 @@
  */
 
 /**
+ * @license
+ * Copyright 2010 Google Inc. All Rights Reserved.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -43,7 +46,7 @@
  *                cluster.
  *     'zoomOnClick': (boolean) Whether the default behaviour of clicking on a
  *                    cluster is to zoom into it.
- *     'averageCenter': (boolean) Wether the center of each cluster should be
+ *     'averageCenter': (boolean) Whether the center of each cluster should be
  *                      the average of all markers in the cluster.
  *     'minimumClusterSize': (number) The minimum number of markers to be in a
  *                           cluster before the markers are hidden and a count
@@ -56,6 +59,7 @@
  *       'textColor': (string) The text color.
  *       'textSize': (number) The text size.
  *       'backgroundPosition': (string) The position of the backgound x, y.
+ *       'iconAnchor': (Array) The anchor position of the icon x, y.
  * @constructor
  * @extends google.maps.OverlayView
  */
@@ -186,10 +190,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
  * @type {string}
  * @private
  */
-MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ =
-    // 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/' +
-    'https://raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/'+
-    'images/m';
+MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = '../assets/m';
 
 
 /**
@@ -855,6 +856,7 @@ Cluster.prototype.addMarker = function(marker) {
       this.calculateBounds_();
     }
   }
+
   marker.isAdded = true;
   this.markers_.push(marker);
 
@@ -1041,17 +1043,47 @@ function ClusterIcon(cluster, styles, opt_padding) {
 
 /**
  * Triggers the clusterclick event and zoom's if the option is set.
+ *
+ * @param {google.maps.MouseEvent} event The event to propagate
  */
-ClusterIcon.prototype.triggerClusterClick = function() {
+ClusterIcon.prototype.triggerClusterClick = function(event) {
   var markerClusterer = this.cluster_.getMarkerClusterer();
 
   // Trigger the clusterclick event.
-  google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_);
+  // google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_, event);
+  //
+  // if (markerClusterer.isZoomOnClick()) {
+  //   // Zoom into the cluster.
+  //   this.map_.fitBounds(this.cluster_.getBounds());
+  // }
+  //My addition HERE...
 
-  if (markerClusterer.isZoomOnClick()) {
-    // Zoom into the cluster.
-    this.map_.fitBounds(this.cluster_.getBounds());
-  }
+  console.log('cluster clicked');
+  var clusterPreview = $('<div id="clusterPreview">');
+  var gameList = $('<li class="gameList">');
+  clusterPreview.append(gameList);
+  var counter = 0;
+  var total = this.cluster_.getMarkers().length;
+
+  this.cluster_.getMarkers().forEach(function(marker){
+    var game = new LetsBall.Models.Game({id: marker.gameId});
+    game.fetch({
+      success: function(arg) {
+        var gameLink = $("<a href='#/games/" + marker.gameId + "'>")
+        date = new Date(arg.attributes.time);
+        gameLink.html(
+          'L -' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + arg.attributes.place_name + '<br>' + date.toLocaleDateString() + '<br>@ ' + date.toLocaleTimeString()
+        );
+        gameList.append(gameLink);
+        counter++;
+        if (counter == total) {
+          $('body').append(clusterPreview);
+        }
+      }
+    })
+  })
+
+  //to HERE.
 };
 
 
@@ -1061,6 +1093,7 @@ ClusterIcon.prototype.triggerClusterClick = function() {
  */
 ClusterIcon.prototype.onAdd = function() {
   this.div_ = document.createElement('DIV');
+  this.div_.classList.add('cluster')
   if (this.visible_) {
     var pos = this.getPosFromLatLng_(this.center_);
     this.div_.style.cssText = this.createCss(pos);
@@ -1071,47 +1104,18 @@ ClusterIcon.prototype.onAdd = function() {
   panes.overlayMouseTarget.appendChild(this.div_);
 
   var that = this;
-  google.maps.event.addDomListener(this.div_, 'click', function() {
-    that.triggerClusterClick();
-  });
-  google.maps.event.addDomListener(this.div_, 'mouseenter', function() {
-    if (!LetsBall.isShowingCluster) {
-      LetsBall.isShowingCluster = true;
-      var previewListContainerEl = $("<div class='prev-list-container'>")
-      var previewList = $("<ul class='prev-list'>")
-      $('body').append(previewListContainerEl);
-      previewListContainerEl.append(previewList);
-      $('div.prev-list-container').css({
-        'width': 'auto',
-        'height': 'auto',
-        'background-color':'white',
-        'z-index':'999999',
-        'border':'solid 2px black',
-        'text-align': 'center',
-        'position':'absolute',
-        'top': LetsBall.cursorY - $(this).height(),
-        'left': LetsBall.cursorX - $(this).width()
-        // 'top': LetsBall.cursorY - 100,
-        // 'left': LetsBall.cursorX - 100
-      })
-      $('div.prev-list-container').mouseleave(function () {
-        $('div.prev-list-container').remove();
-        LetsBall.isShowingCluster = false;
-      });
-      that.cluster_.getMarkers().forEach(function(marker){
-        var game = new LetsBall.Models.Game({id: marker.gameId});
-        game.fetch({
-          success: function(arg) {
-            var previewListItem = $("<li> class='prev-list-item'")
-            date = new Date(arg.attributes.time);
-            previewListItem.text(
-              'Level : ' + arg.attributes.level + ',' + arg.attributes.sport + ',' + arg.attributes.place_name + ',' + date.toDateString() + ', @ ' + date.toLocaleTimeString()
-            );
-            $('ul.prev-list').append(previewListItem)
-          }
-        });
-      })
+  var isDragging = false;
+  google.maps.event.addDomListener(this.div_, 'click', function(event) {
+    // Only perform click when not preceded by a drag
+    if (!isDragging) {
+      that.triggerClusterClick(event);
     }
+  });
+  google.maps.event.addDomListener(this.div_, 'mousedown', function() {
+    isDragging = false;
+  });
+  google.maps.event.addDomListener(this.div_, 'mousemove', function() {
+    isDragging = true;
   });
 };
 
@@ -1125,8 +1129,14 @@ ClusterIcon.prototype.onAdd = function() {
  */
 ClusterIcon.prototype.getPosFromLatLng_ = function(latlng) {
   var pos = this.getProjection().fromLatLngToDivPixel(latlng);
-  pos.x -= parseInt(this.width_ / 2, 10);
-  pos.y -= parseInt(this.height_ / 2, 10);
+
+  if (typeof this.iconAnchor_ === 'object' && this.iconAnchor_.length === 2) {
+    pos.x -= this.iconAnchor_[0];
+    pos.y -= this.iconAnchor_[1];
+  } else {
+    pos.x -= parseInt(this.width_ / 2, 10);
+    pos.y -= parseInt(this.height_ / 2, 10);
+  }
   return pos;
 };
 
@@ -1222,6 +1232,7 @@ ClusterIcon.prototype.useStyle = function() {
   this.anchor_ = style['anchor'];
   this.textSize_ = style['textSize'];
   this.backgroundPosition_ = style['backgroundPosition'];
+  this.iconAnchor_ = style['iconAnchor'];
 };
 
 
@@ -1252,6 +1263,10 @@ ClusterIcon.prototype.createCss = function(pos) {
         this.anchor_[0] < this.height_) {
       style.push('height:' + (this.height_ - this.anchor_[0]) +
           'px; padding-top:' + this.anchor_[0] + 'px;');
+    } else if (typeof this.anchor_[0] === 'number' && this.anchor_[0] < 0 &&
+        -this.anchor_[0] < this.height_) {
+      style.push('height:' + this.height_ + 'px; line-height:' + (this.height_ + this.anchor_[0]) +
+          'px;');
     } else {
       style.push('height:' + this.height_ + 'px; line-height:' + this.height_ +
           'px;');

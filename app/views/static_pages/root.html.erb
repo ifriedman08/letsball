@@ -11,93 +11,88 @@
   </head>
   <body>
     <div id="loader"></div>
-    <div id="map"></div>
     <div id="content"></div>
+    <div id="map"></div>
     <script type="text/javascript">
       $(window.LetsBall.initialize)
 
-      $(function () {
-        // $('#content').empty();
-        $('#map').css('opacity', 0);
-        LetsBall.allMarkers = [];
-        $('#loader').spin();
-        initMap();
-        var mc = new MarkerClusterer(map);
-        var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
-        map.setOptions({styles: styles});
-        // LetsBall.allGames = new LetsBall.Collections.Games();
-        // LetsBall.allGames.fetch({
-        //   data: {'filter': window.localStorage.LetsBallFilters},
-        //   success: function(){
-        //     LetsBall.addAllMarkers();
-        //     LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
-        //   }
-        // })
-        function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            // center: {lat: -34.397, lng: 150.644},
-            maxZoom: 18,
-            zoom: 13,
-            disableDefaultUI: true,
+      LetsBall.initMap = function() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          // center: {lat: -34.397, lng: 150.644},
+          maxZoom: 18,
+          zoom: 13,
+          disableDefaultUI: true,
+        });
+        // var infoWindow = new google.maps.InfoWindow({map: map});
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            LetsBall.pos = pos;
+
+            // infoWindow.setPosition(pos);
+            // infoWindow.setContent('.');
+            map.setCenter(pos);
+            LetsBall.allGames = new LetsBall.Collections.Games();
+            var data = JSON.parse(window.localStorage.LetsBallFilters);
+            data.pos = pos;
+            LetsBall.allGames.fetch({
+              data: data,
+              success: function(){
+                LetsBall.addAllMarkers();
+                console.log('added markers');
+                LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
+              }
+            })
+          }, function() {
+            // handleLocationError(true, infoWindow, map.getCenter());
           });
-          // var infoWindow = new google.maps.InfoWindow({map: map});
-
-          // Try HTML5 geolocation.
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-              LetsBall.pos = pos;
-
-              // infoWindow.setPosition(pos);
-              // infoWindow.setContent('.');
-              map.setCenter(pos);
-              LetsBall.allGames = new LetsBall.Collections.Games();
-              var data = JSON.parse(window.localStorage.LetsBallFilters);
-              data.pos = pos;
-              LetsBall.allGames.fetch({
-                data: data,
-                success: function(){
-                  LetsBall.addAllMarkers();
-                  LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
-                }
-              })
-            }, function() {
-              // handleLocationError(true, infoWindow, map.getCenter());
-            });
-          } else {
-            // Browser doesn't support Geolocation
-            // handleLocationError(false, infoWindow, map.getCenter());
-          }
-
-          map.addListener('tilesloaded', function() {
-            $('#loader').spin(false);
-            $('#map').css('opacity', 1);
-            $('#map').css('position', 'fixed');
-          });
-
-          map.addListener('zoom_changed', function() {
-            LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
-          });
-
-
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-          infoWindow.setPosition(pos);
-          infoWindow.setContent(browserHasGeolocation ?
-                                'Error: The Geolocation service failed.' :
-                                'Error: Your browser doesn\'t support geolocation.');
+        } else {
+          // Browser doesn't support Geolocation
+          // handleLocationError(false, infoWindow, map.getCenter());
         }
 
-        var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
+        map.addListener('tilesloaded', function() {
+          $('#loader').spin(false);
+          $('#map').css('opacity', 1);
+          $('#map').css('position', 'fixed');
+          LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
+        });
 
+        map.addListener('zoom_changed', function() {
+          LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
+        });
+
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
       }
-    })
-    $('body').mousemove(function(event){
-      LetsBall.cursorX = event.pageX;
-      LetsBall.cursorY = event.pageY;
-    })
+
+      var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
+
+      $('#map').css('opacity', 0);
+      LetsBall.allMarkers = [];
+      $('#loader').spin();
+      var mc = new MarkerClusterer(map);
+      var styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#46bcec"},{"visibility":"on"}]}];
+      map.setOptions({styles: styles});
+    }
+
+      $(function () {
+        console.log('initializing map...');
+        LetsBall.initMap();
+      })
+      $('body').mousemove(function(event){
+        LetsBall.cursorX = event.pageX;
+        LetsBall.cursorY = event.pageY;
+      })
     </script>
   </body>
 </html>

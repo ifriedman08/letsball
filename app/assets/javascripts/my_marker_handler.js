@@ -1,4 +1,4 @@
-LetsBall.setupNewGame = function () {
+  LetsBall.setupNewGame = function () {
   var newGame = new LetsBall.Models.Game();
   var place = autocomplete.getPlace();
   var latitude = place.geometry.location.lat();
@@ -37,8 +37,8 @@ LetsBall.saveGame = function (event) {
         animation: google.maps.Animation.DROP
       });
       LetsBall.allMarkers.push(marker);
-      marker.addListener('mouseover', LetsBall.addMarkerMouseOver(event, this));
-      marker.addListener('mouseout', function () {
+      marker.addListener('click', LetsBall.addMarkerClick(event, this));
+      map.addListener('click', function () {
         $('div.prev-container').remove();
 
       });
@@ -62,7 +62,7 @@ LetsBall.addMarker = function (game, drop) {
   LetsBall.allMarkers.push(marker);
 
   marker.addListener('mouseover', function (event) {
-    LetsBall.addMarkerMouseOver(event, this);
+    LetsBall.addMarkerClick(event, this);
   })
 }
 
@@ -73,7 +73,7 @@ LetsBall.addAllMarkers = function () {
   LetsBall.MarkerClustererObj = new MarkerClusterer(map, LetsBall.allMarkers);
 }
 
-LetsBall.addMarkerMouseOver = function (event, marker) {  
+LetsBall.addMarkerClick = function (event, marker) {
   var game = new LetsBall.Models.Game({id: marker.gameId});
   that = event
   game.fetch({
@@ -84,7 +84,7 @@ LetsBall.addMarkerMouseOver = function (event, marker) {
       var width = 150;
       date = new Date(arg.attributes.time);
       $('a.prev-container').html(
-        'Level : ' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + arg.attributes.place_name + '<br>' + date.toDateString() + '<br>@ ' + date.toLocaleTimeString()
+        'L -' + arg.attributes.level + '<br>' + arg.attributes.sport + '<br>' + arg.attributes.place_name + '<br>' + date.toLocaleDateString() + '<br>@ ' + date.toLocaleTimeString()
       );
       $('a.prev-container').css({
         'width':width,
@@ -93,12 +93,13 @@ LetsBall.addMarkerMouseOver = function (event, marker) {
         'border':'solid 2px black',
         'height': height + 'px',
         'cursor': 'none',
+        'padding': '1%',
         'text-align': 'center',
         'position':'absolute',
         'top': LetsBall.cursorY - (height / 2),
         'left': LetsBall.cursorX - (width / 2)
       })
-      $('a.prev-container').mouseout(function () {
+      $('div.prev-map').click(function () {
         $('a.prev-container').remove();
       });
     }

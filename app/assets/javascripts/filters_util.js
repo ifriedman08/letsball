@@ -5,6 +5,9 @@ $(document).ready(function () {
 
   $('body').append("<div class='filter-background' style='display:none'>");
   $('body').append(filterDash);
+  $('.filter-background').click(function () {
+    toggleFilterModal();
+  })
 
   var removeFilterHandler = function() {
     console.log('removing filter');
@@ -20,14 +23,20 @@ $(document).ready(function () {
 
   filterDash.load('/assets/filterDash.html', function () {
     if (window.localStorage.LetsBallFilters && window.localStorage.LetsBallFilters != '') {
-      // var filter_arr = window.localStorage.LetsBallFilters.split(',');
-      // filter_arr.forEach(function (element) {
-      //   if ($('.' + element)[0].getAttribute('type') == 'checkbox'){
-      //     $('.' + element)[0].setAttribute('checked', true)
-      //   } else if ($('.' + element)[0].getAttribute('tagName') == 'option') {
-      //     $('.filter.time-selector')[0].val(element)
-      //   };
-      // })
+      var filters = JSON.parse(window.localStorage.LetsBallFilters)
+      if (filters.times) {
+        $('.time-selector').val(filters.times);
+      }
+      if (filters.sports) {
+        filters.sports.forEach(function (sport) {
+          $('.checkbox.' + sport)[0].setAttribute("checked",true);
+        })
+      }
+      if (filters.levels) {
+        filters.levels.forEach(function (level) {
+          $('.checkbox.' + level)[0].setAttribute("checked",true);
+        })
+      }
     }
     $('#remove_all_filters').click(removeFilterHandler);
     $('#update_filters').click(setFilterHandler);
@@ -60,16 +69,19 @@ $(document).ready(function () {
       window.localStorage.LetsBallFilters = "{}";
     }
     toggleFilterModal();
-    // if (window.localStorage.LetsBallFilters != "") {
-    //   window.location.href = window.location.origin + "/?" + window.localStorage.LetsBallFilters;
-    // } else {
-      window.location.href = window.location.origin + "/";
-    // }
+    LetsBall.initMap();
   };
 
   function toggleFilterModal() {
     $('.filter-dash').toggle();
     $('.filter-background').toggle();
+  }
+
+  function clearOverlays() {
+    for (var i = 0; i < LetsBall.allMarkers.length; i++ ) {
+      LetsBall.allMarkers[i].setMap(null);
+    }
+    LetsBall.allMarkers = [];
   }
 
   $('.add-filters-link').click(function () {
